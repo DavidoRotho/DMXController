@@ -253,10 +253,10 @@ void *read_serial(void *params)
 				p->speed = (unsigned char)(((float)atoi(pos+4)/1023.0)*255.0);
 				myfile << "CONV: " << (int)p->speed << "\n";
 			}
-			if (strstr(pos, "Pus") != NULL)
+			if (strstr(pos, "Tog") != NULL)
 			{
-				pos[strlen(pos)-2] = '\0';
-				if (atoi(pos+4) == 1)
+				*(pos+5) = '\0';
+				if (atoi(pos+4) == 0)
 					p->blackout = true;
 				else
 					p->blackout = false;
