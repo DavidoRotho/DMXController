@@ -37,5 +37,13 @@ int Octopustri::setStrobe(unsigned char b)
 }
 int Octopustri::setSpeed(unsigned char b)
 {
-	return DMXDevice::setValue(this->handle, this->values, b, this->channel+1);
+	unsigned char old_range = 255;
+	unsigned char new_max = 120; // real max is 120
+       	unsigned char new_min = 10; // real is 10
+	unsigned char new_range = new_max-new_min;
+	unsigned char new_value = (b*new_range) / old_range + 10;
+	
+	new_value = new_max + new_min - new_value;
+	
+	return DMXDevice::setValue(this->handle, this->values, new_value, this->channel+1);
 }

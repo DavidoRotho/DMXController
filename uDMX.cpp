@@ -253,6 +253,19 @@ void *read_serial(void *params)
 				p->speed = (unsigned char)(((float)atoi(pos+4)/1023.0)*255.0);
 				myfile << "CONV: " << (int)p->speed << "\n";
 			}
+			if (strstr(pos, "Pus") != NULL)
+			{
+				pos[strlen(pos)-2] = '\0';
+				myfile << "Push: " << atoi(pos+4) << "\n";
+				if (atoi(pos+4) == 1)
+				{
+					p->smoke = 255;
+					myfile << "SMOKING\n\n\n";
+				}
+				else
+					p->smoke = 0;
+				myfile << "Smoke: " << atoi(pos+4) << "\n";
+			}
 			if (strstr(pos, "Tog") != NULL)
 			{
 				*(pos+5) = '\0';
